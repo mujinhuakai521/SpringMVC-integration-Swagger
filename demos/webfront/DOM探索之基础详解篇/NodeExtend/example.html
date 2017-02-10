@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dom extend</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      console.log(Object.getOwnPropertyNames(document.createElement("p").__proto__));
+      console.log(Object.getOwnPropertyNames(document.createElement("p").__proto__.__proto__));
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.albert.spring.mybatis.dao.mapper.UserMapper" >
+    <select id="findUserById" resultType="com.albert.spring.mybatis.entity.User" parameterType="java.lang.Integer">
+        select * from user where id = #{id}
+    </select>
+    <insert id="insertUser" parameterType="com.albert.spring.mybatis.entity.User">
+        insert into user(account, name) values(#{account},#{name})
+        <selectKey resultType="int" keyProperty="id" >
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+    </insert>
+    <select id="findUserByAccount" resultType="com.albert.spring.mybatis.entity.User" parameterType="java.lang.String">
+        select * from user where account = #{account}
+    </select>
+</mapper>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>NodeType</title>
+  </head>
+  <body>
+    <div id="test">aaa</div>
+
+    <div id="p-node">
+      <div id="c-node">子节点</div>
+    </div>
+    <!--  isElement 验证 start  -->
+    <script type="text/javascript">
+      // var isElement = function(el) {
+      //   return !!el && el.nodeType === 1;
+      // }
+      // var a = {
+      //   nodeType : 1
+      // }
+      // console.log(isElement(document.getElementById('test')));
+		  // console.log(isElement(document.getElementById("test").nextSibling));
+      // console.log(isElement(a));
+    </script>
+    <script type="text/javascript">
+      var testDiv = document.createElement('div');
+      var isElement = function(obj) {
+        if(obj && obj.nodeType === 1) {
+          if(window.Node && (obj instanceof Node)) {
+            return true;
+          }
+          try {
+            testDiv.appendChild(obj);
+            testDiv.removeChild(obj);
+          } catch(e) {
+            return false;
+          }
+          return true;
+        }
+        return false;
+      }
+      var a = {
+        nodeType : 1
+      }
+      console.log("isElement should be true: " + isElement(document.getElementById('test')));
+      console.log("isElement should be false: " + isElement(document.getElementById("test").nextSibling));
+      console.log("isElement should be false: " + isElement(a));
+    </script>
+    <!--  isElement 验证 end  -->
+
+    <!-- isXML begin  -->
+    <script type="text/javascript">
+      // JQuery
+      // var isXML = function(elem) {
+      //   var documentElement = elem && (elem.ownerDocument || elem).documentElement;
+      //   console.log(documentElement);
+      //   return documentElement ? documentElement.nodeName !== 'HTML' : false;
+      // };
+      // console.log("isXML should be false: " + isXML(document.getElementById('test')));
+      var isXML = function(document) {
+        return (!!document.xmlVersion)
+                || (!!document.xml)
+                || (toString.call(document)) === '[object XMLDocument]'
+                ||(document.nodeType == 9 && document.documentElement.nodeName != 'HTML')
+      };
+      console.log("isXML should be false: " + isXML(document.getElementById('test')));
+      //功能法
+      var isXML2 = function(doc) {
+        return doc.createElement('p').nodeName !== doc.createElement('P').nodeName;
+      }
+      console.log("isXML2 should be false: " + isXML2(document));
+    </script>
+    <!-- isXML end  -->
+
+    <!-- 节点关系 begin -->
+    <script type="text/javascript">
+      var pNode = document.getElementById('p-node');
+      var cNode = document.getElementById('c-node');
+      console.log("必须是两个元素节点才能使用 contains： " + pNode.contains(cNode));
+      console.log("IE 中 document 没有 contains： " + document.contains(cNode));
+      function fixContains(a, b) {
+        try {
+          while ((b = b.parentNode)) {
+            if(b === a) {
+              return true;
+            }
+          }
+          return false;
+        } catch (e) {
+          return false;
+        }
+      }
+      console.log("fixContains shoulde be true :" + fixContains(document, cNode));
+    </script>
+    <!-- 节点关系 end -->
+  </body>
+</html>

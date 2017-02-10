@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>html</title>
+  </head>
+  <body>
+    <!-- Comment -->
+    <div id="tip">
+      这是一个元素节点
+    </div>
+    <ul id="list-node"></ul>
+    <script type="text/javascript">
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < 5; i++) {
+        var li = document.createElement('li');
+        li.innerHTML = 'Hh';
+        frag.appendChild(li);
+      }
+      document.getElementById('list-node').appendChild(frag);
+      var divNode = document.getElementById('tip'); //元素节点
+      console.log(Node);
+      console.log(divNode.nodeType);
+      console.log(divNode.nodeType == 1);//数值常量兼容所有浏览器
+      console.log(divNode.nodeType == Node.ELEMENT_NODE); //IE 不兼容
+      console.log(divNode.nodeName + "/" + divNode.nodeValue);
+      var attrNode = divNode.attributes[0]; //属性节点
+      console.log(attrNode.nodeName + "/" + attrNode.nodeValue);
+      var textNode = divNode.childNodes[0]; //文本节点
+      console.log(textNode.nodeName + "/" + textNode.nodeValue);
+      var commentNode = document.body.childNodes[1]; //注释节点
+      console.log(commentNode.nodeName + "/" + commentNode.nodeValue);
+      console.log(document.doctype.nodeName + "/" + document.doctype.nodeValue); //文档类型节点
+    </script>
+  </body>
+</html>

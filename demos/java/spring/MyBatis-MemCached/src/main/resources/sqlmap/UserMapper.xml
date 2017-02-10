@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.albert.spring.mybatis.dao.mapper.UserMapper" >
+    <!-- 使用MemCached缓存 配置文件在 memcached.properties中 -->
+    <cache type="org.mybatis.caches.memcached.MemcachedCache" />
+    <cache type="org.mybatis.caches.memcached.LoggingMemcachedCache" />
+
+    <!-- 使用MyBatis 自带的缓存 -->
+    <!--<cache eviction="LRU"-->
+           <!--flushInterval="60000"-->
+           <!--size="1024"-->
+           <!--readOnly="true"-->
+       <!--/>-->
+
+    <!-- 特定的sql可以使用useCache="false" -->
+    <select id="findUserById" resultType="com.albert.spring.mybatis.entity.User" parameterType="java.lang.Integer">
+        select * from user where id = #{id}
+    </select>
+    <insert id="insertUser" parameterType="com.albert.spring.mybatis.entity.User">
+        insert into user(account, name) values(#{account},#{name})
+        <selectKey resultType="int" keyProperty="id" >
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+    </insert>
+    <delete id="deleteUser" parameterType="java.lang.String">
+        delete from user where account = #{account}
+    </delete>
+</mapper>
